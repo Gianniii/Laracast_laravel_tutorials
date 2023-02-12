@@ -5,7 +5,6 @@
 
 <body>
     <article>
-        <h1>My first post</h1>
         <p><?= $post ?></p>
     </article>
 
