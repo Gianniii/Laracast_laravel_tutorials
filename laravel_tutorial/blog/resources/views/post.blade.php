@@ -1,16 +1,13 @@
----
-title: My tytle Example
----
-<!-- Above is yaml-->
-
+<!DOCTYPE html>
 
 <title>My Blog</title>
 <link rel="stylesheet" href="/app.css">
 
 <body>
     <article>
-        <?= $post ?>
+        <h1>My first post</h1>
+        <p><?= $post ?></p>
     </article>
 
-    <a href="/">Go Back</a>
+    <a href="/">Go back</a>
 </body>
