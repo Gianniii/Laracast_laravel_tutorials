@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
 use App\Models\Category;
+use App\Models\User;
 
 use Illuminate\Support\Facades\File;
 
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\File;
 Route::get('/', function () {
     //dd("gets all");
     return view('posts', [
-        'posts' =>  Post::with('category')->get(),
+        'posts' =>  Post::latest()->with('category', 'author')->get(), //eager load category and author(preload)(avoid N+1 prob)and get results
     ]);
 });
 
@@ -29,7 +30,8 @@ Route::get('/', function () {
 //  return 'slug';     
 //}
 //if {post} instead of {post:slug}(w/o the function above), then laravel defaults to use id to find post
-//gimme post where 'slug' matches the wildcard ($post)
+//gimme post where 'slug' matches the wildcard ($post)'s slug attribute
+//IF THIS CONCEPT CONFUSES YOU JUST TRY LOAD PAGE AND SEE WHAT IS IN URI
 Route::get('/posts/{post}', function(Post $post) { //Post::where('slug', $post)->firstOrFail()
     return view('post', [
         'post'=> $post,
@@ -38,6 +40,15 @@ Route::get('/posts/{post}', function(Post $post) { //Post::where('slug', $post)-
 
 Route::get('/categories/{category:slug}', function (Category $category) {
     return view('posts', [
-        'posts'=> $category->posts,
+        'posts'=> $category->posts->load(['category', 'author']),
+    ]);
+});
+
+
+Route::get('/authors/{author:username}', function (User $author) { //Post::where('username', $author)->firstOrFail()
+    //basically find user with given username and return view with his posts
+    return view('posts', [
+        //load with category and author so want to reload everytime.
+        'posts'=> $author->posts->load(['category', 'author']), //this works cuz of eloquent relationship setup on model
     ]);
 });
