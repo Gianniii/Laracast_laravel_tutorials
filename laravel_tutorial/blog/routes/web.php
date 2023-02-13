@@ -17,13 +17,14 @@ use Illuminate\Support\Facades\File;
 */
 
 Route::get('/', function () {
+    //dd("gets all");
     return view('posts', [
         'posts' =>  Post::all(),
     ]);
 });
 
-Route::get('/post/{post}', function($slug) {
+Route::get('/posts/{post}', function($id) {
     return view('post', [
-        'post'=> Post::find($slug),
+        'post'=> Post::findOrFail($id),
     ]);
-})->where('post', '[A-z\-]+');
+});//->where('post', '[A-z\-]+');
