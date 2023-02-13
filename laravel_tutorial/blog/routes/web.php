@@ -32,7 +32,7 @@ Route::get('/', function () {
 //if {post} instead of {post:slug}(w/o the function above), then laravel defaults to use id to find post
 //gimme post where 'slug' matches the wildcard ($post)'s slug attribute
 //IF THIS CONCEPT CONFUSES YOU JUST TRY LOAD PAGE AND SEE WHAT IS IN URI
-Route::get('/posts/{post}', function(Post $post) { //Post::where('slug', $post)->firstOrFail()
+Route::get('/posts/{post:slug}', function(Post $post) { //Post::where('slug', $post)->firstOrFail()
     return view('post', [
         'post'=> $post,
     ]);

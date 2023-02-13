@@ -1,4 +1,6 @@
 
+@props(['post'])
+
 <x-layout>
   <x-slot name="content">
   
@@ -10,9 +12,9 @@
       <div>
         {!!$post->body!!}
       </div>
-    </article>
+  </article>
 
-    <a href="/">Go back</a>
+  <a href="/">Go back</a>
   
   </x-slot>
 </x-layout>s
