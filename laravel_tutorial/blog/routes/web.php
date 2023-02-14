@@ -22,6 +22,7 @@ Route::get('/', function () {
     //dd("gets all");
     return view('posts', [
         'posts' =>  Post::latest()->with('category', 'author')->get(), //eager load category and author(preload)(avoid N+1 prob)and get results
+        'categories'=> Category::all(),
     ]);
 });
 
