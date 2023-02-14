@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
 use App\Models\Category;
@@ -18,13 +19,8 @@ use Illuminate\Support\Facades\File;
 |
 */
 
-Route::get('/', function () {
-    //dd("gets all");
-    return view('posts', [
-        'posts' =>  Post::latest()->with('category', 'author')->get(), //eager load category and author(preload)(avoid N+1 prob)and get results
-        'categories'=> Category::all(),
-    ]);
-});
+//[PostController::class, 'index'] //path to controller + name of function want to call
+Route::get('/', [PostController::class, 'index'])->name('home');
 
 //alternatively can following fct to model and just use {post}: 
 //public function getRouteKeyName() {
@@ -33,15 +29,14 @@ Route::get('/', function () {
 //if {post} instead of {post:slug}(w/o the function above), then laravel defaults to use id to find post
 //gimme post where 'slug' matches the wildcard ($post)'s slug attribute
 //IF THIS CONCEPT CONFUSES YOU JUST TRY LOAD PAGE AND SEE WHAT IS IN URI
-Route::get('/posts/{post:slug}', function(Post $post) { //Post::where('slug', $post)->firstOrFail()
-    return view('post', [
-        'post'=> $post,
-    ]);
-});//->where('post', '[A-z\-]+');
+//notice its bit more sneaky, have to look at inputs of 'show' function now
+Route::get('/posts/{post:slug}', [PostController::class, 'show']);//->where('post', '[A-z\-]+');
 
 Route::get('/categories/{category:slug}', function (Category $category) {
     return view('posts', [
         'posts'=> $category->posts->load(['category', 'author']),
+        'currentCategory'=>$category,
+        'categories'=> Category::all(),
     ]);
 });
 
@@ -51,5 +46,6 @@ Route::get('/authors/{author:username}', function (User $author) { //Post::where
     return view('posts', [
         //load with category and author so want to reload everytime.
         'posts'=> $author->posts->load(['category', 'author']), //this works cuz of eloquent relationship setup on model
+        'categories'=> Category::all(),
     ]);
 });

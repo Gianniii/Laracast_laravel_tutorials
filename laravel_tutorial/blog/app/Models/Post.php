@@ -19,6 +19,15 @@ class Post extends Model
     //protected $fillable = ['title', 'excerpt', 'body'] //mass assignment allowed only for these fields
     //Sol3) just never allow mass assignment, and we always exclicitely set every key-value pair
 
+    //invoked by ->filter()
+    public function scopeFilter($query, array $filters){ //$query === Post::newQuery()-
+        if($filters['search'] ?? false) {
+            $query 
+                ->where('title', 'like', '%' .request('search'). '%')
+                ->orWhere('body', 'like', '%'.request('search').'%');
+        }
+    }
+
     public function category(){
         //Relationships: hasOne, hasMany, belongsTo, belongsToMany
         return $this->belongsTo(Category::class);
