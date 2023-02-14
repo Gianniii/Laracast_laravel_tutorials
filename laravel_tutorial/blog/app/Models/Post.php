@@ -26,6 +26,11 @@ class Post extends Model
                 ->where('title', 'like', '%' .request('search'). '%')
                 ->orWhere('body', 'like', '%'.request('search').'%');
         }
+        if($filters['category'] ?? false) {
+            $query 
+                ->where('title', 'like', '%' .request('search'). '%')
+                ->orWhere('body', 'like', '%'.request('search').'%');
+        }
     }
 
     public function category(){
