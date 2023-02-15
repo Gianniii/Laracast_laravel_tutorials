@@ -35,11 +35,11 @@ class Post extends Model
                 $query->where('slug', $category)
             )
         );
-        if($filters['author'] ?? false) {
-            $query 
-                ->where('author', 'like', '%' .request('search'). '%')
-                ->orWhere('username', 'like', '%'.request('search').'%');
-        }
+        $query->when($filters['author'] ?? false, fn($query, $author) => 
+        $query->whereHas('author', fn($query) => 
+            $query->where('username', $author)
+        )
+    );
     }
 
     public function category(){

@@ -32,21 +32,18 @@ Route::get('/', [PostController::class, 'index'])->name('home');
 //notice its bit more sneaky, have to look at inputs of 'show' function now
 Route::get('/posts/{post:slug}', [PostController::class, 'show']);//->where('post', '[A-z\-]+');
 
-
-Route::get('/authors/{author:username}', function (User $author) { //Post::where('username', $author)->firstOrFail()
-    //basically find user with given username and return view with his posts
-    return view('posts.index', [
-        //load with category and author so want to reload everytime.
-        'posts'=> $author->posts->load(['category', 'author']), //this works cuz of eloquent relationship setup on model
-        'categories'=> Category::all(),
-    ]);
-});
-
-//route not longer needed i merged it with PostController
+//routes not longer needed i merged it with PostController
+// Route::get('/authors/{author:username}', function (User $author) { //Post::where('username', $author)->firstOrFail()
+//     //basically find user with given username and return view with his posts
+//     return view('posts.index', [
+//         //load with category and author so want to reload everytime.
+//         'posts'=> $author->posts->load(['category', 'author']), //this works cuz of eloquent relationship setup on model
+//         'categories'=> Category::all(),
+//     ]);
+// });
 // Route::get('/categories/{category:slug}', function (Category $category) {
 //     return view('posts.index', [
 //         'posts'=> $category->posts,
 //         'currentCategory'=>$category,
-//         'categories'=> Category::all(),
 //     ]);
 // });
