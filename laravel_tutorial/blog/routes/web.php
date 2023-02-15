@@ -3,6 +3,7 @@
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SessionsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,8 +28,12 @@ Route::get('/', [PostController::class, 'index'])->name('home');
 //IF THIS CONCEPT CONFUSES YOU JUST TRY LOAD PAGE AND SEE WHAT IS IN URI
 //notice its bit more sneaky, have to look at inputs of 'show' function now
 Route::get('/posts/{post:slug}', [PostController::class, 'show']);//->where('post', '[A-z\-]+');
-Route::get('/register', [RegisterController::class, 'create']);
-Route::post('/register', [RegisterController::class, 'store']);
+Route::get('/register', [RegisterController::class, 'create'])->middleware('guest');
+Route::post('/register', [RegisterController::class, 'store'])->middleware('guest');
+Route::get('/login', [SessionsController::class, 'create'])->middleware('guest');
+Route::post('/logout', [SessionsController::class, 'destroy'])->middleware('auth');
+Route::post('/sessions', [SessionsController::class, 'store'])->middleware('guest'); //could do /login ect.. here just use /sessions cuz sessions controller
+
 
 
 //routes not longer needed i merged it with PostController

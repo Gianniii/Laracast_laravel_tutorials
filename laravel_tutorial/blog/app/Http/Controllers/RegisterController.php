@@ -23,11 +23,12 @@ class RegisterController extends Controller
         ]);
         //if validatin fails, we auto redo redirected back to previous form
 
-        User::create($attributes);
+        $user = User::create($attributes);
 
+        //log in the user
+        auth()->login($user);
         
         //session()->flash('success', 'Your account has been created.'); 
-
         //redirect to homepage with the following flashed...
         return redirect('/')->with('success', 'Your account has been created.');;
     }
