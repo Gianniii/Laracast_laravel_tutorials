@@ -18,7 +18,7 @@
             All
         </a>
         @foreach ($categories as $category)
-            <a href="/?category={{$category->slug}}" 
+            <a href="/?category={{$category->slug}}&{{ http_build_query(request()->except('category')) }}" 
                 class ="position:relative block text-left px-3 text-sm leading-6 hover:bg-gray-300 focus:bg-gray-300">
                 {{ucwords($category->name)}}
             </a>
