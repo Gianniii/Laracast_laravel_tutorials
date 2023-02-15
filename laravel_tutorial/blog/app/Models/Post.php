@@ -21,15 +21,28 @@ class Post extends Model
 
     //invoked by ->filter()
     public function scopeFilter($query, array $filters){ //$query === Post::newQuery()-
-        if($filters['search'] ?? false) {
+
+        $query->when($filters['search'] ?? false, fn($query, $search) => 
+            $query->where(fn($query) =>
+                $query->where('title', 'like', '%'.request('search').'%') 
+                ->orWhere('body', 'like', '%'.request('search').'%')
+                )
+        );
+        // if($filters['search'] ?? false) {
+        //     $query 
+        //         ->where('title', 'like', '%' .request('search'). '%')
+        //         ->orWhere('body', 'like', '%'.request('search').'%');
+        // }
+
+        $query->when($filters['category'] ?? false, fn($query, $category) => 
+            $query->whereHas('category', fn($query) => 
+                $query->where('slug', $category)
+            )
+        );
+        if($filters['author'] ?? false) {
             $query 
-                ->where('title', 'like', '%' .request('search'). '%')
-                ->orWhere('body', 'like', '%'.request('search').'%');
-        }
-        if($filters['category'] ?? false) {
-            $query 
-                ->where('title', 'like', '%' .request('search'). '%')
-                ->orWhere('body', 'like', '%'.request('search').'%');
+                ->where('author', 'like', '%' .request('search'). '%')
+                ->orWhere('username', 'like', '%'.request('search').'%');
         }
     }
 
