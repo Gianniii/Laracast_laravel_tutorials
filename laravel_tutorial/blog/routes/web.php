@@ -32,14 +32,6 @@ Route::get('/', [PostController::class, 'index'])->name('home');
 //notice its bit more sneaky, have to look at inputs of 'show' function now
 Route::get('/posts/{post:slug}', [PostController::class, 'show']);//->where('post', '[A-z\-]+');
 
-// Route::get('/categories/{category:slug}', function (Category $category) {
-//     return view('posts.index', [
-//         'posts'=> $category->posts,
-//         'currentCategory'=>$category,
-//         'categories'=> Category::all(),
-//     ]);
-// });
-
 
 Route::get('/authors/{author:username}', function (User $author) { //Post::where('username', $author)->firstOrFail()
     //basically find user with given username and return view with his posts
@@ -49,3 +41,12 @@ Route::get('/authors/{author:username}', function (User $author) { //Post::where
         'categories'=> Category::all(),
     ]);
 });
+
+//route not longer needed i merged it with PostController
+// Route::get('/categories/{category:slug}', function (Category $category) {
+//     return view('posts.index', [
+//         'posts'=> $category->posts,
+//         'currentCategory'=>$category,
+//         'categories'=> Category::all(),
+//     ]);
+// });

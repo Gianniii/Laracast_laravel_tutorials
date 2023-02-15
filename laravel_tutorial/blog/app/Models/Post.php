@@ -28,12 +28,8 @@ class Post extends Model
                 ->orWhere('body', 'like', '%'.request('search').'%')
                 )
         );
-        // if($filters['search'] ?? false) {
-        //     $query 
-        //         ->where('title', 'like', '%' .request('search'). '%')
-        //         ->orWhere('body', 'like', '%'.request('search').'%');
-        // }
 
+        //if got category filter(i.e uri has ?category=...), then add this to query
         $query->when($filters['category'] ?? false, fn($query, $category) => 
             $query->whereHas('category', fn($query) => 
                 $query->where('slug', $category)

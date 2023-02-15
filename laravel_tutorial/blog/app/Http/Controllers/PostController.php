@@ -20,7 +20,7 @@ class PostController extends Controller {
                 filter(request(['search', 'category', 'author']))
                 ->paginate(6), //eager load category and author(preload)(avoid N+1 prob)and get results
             'categories'=> Category::all(),
-            'currentCategory'=> Category::where('slug', request('category'))->first()
+            'currentCategory'=> Category::where('slug', request('category'))->first() //get category where the slug is in the request
         ]);
     }
 
