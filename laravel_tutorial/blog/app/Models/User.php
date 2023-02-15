@@ -17,11 +17,12 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    // protected $fillable = [
+    //     'name',
+    //     'email',
+    //     'password',
+    // ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -42,6 +43,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    //Getter
+    public function getPasswordAttributed($password){
+        return $password;
+    }
+
+    //Mutator
+    //auto runs through this when set ex: $user->password ="something";
+    public function setPasswordAttribute($password){ 
+        $this->attributes['password'] = bcrypt($password);
+    }
+    
     public function posts(){
         //Relationships: hasOne, hasMany, belongsTo, belongsToMany
         return $this->hasMany(Post::class);

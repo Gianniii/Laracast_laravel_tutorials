@@ -17,7 +17,8 @@ class PostController extends Controller {
         //dd("gets all");
         return view('posts.index', [
             //eager load category and author(preload)(avoid N+1 prob)and get results
-            'posts' =>  Post::latest()->filter(request(['search', 'category', 'author']))->paginate(6), 
+
+            'posts' =>  Post::latest()->filter(request(['search', 'category', 'author']))->paginate(6)->withQueryString(), 
             //'categories'=> Category::all(), //No longer necessary thanks to CategroyDrowndown.php file
             //'currentCategory'=> Category::where('slug', request('category'))->first() //get category where the slug is in the request
         ]);

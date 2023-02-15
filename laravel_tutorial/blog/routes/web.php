@@ -2,11 +2,7 @@
 
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
-use App\Models\Post;
-use App\Models\Category;
-use App\Models\User;
-
-use Illuminate\Support\Facades\File;
+use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +27,9 @@ Route::get('/', [PostController::class, 'index'])->name('home');
 //IF THIS CONCEPT CONFUSES YOU JUST TRY LOAD PAGE AND SEE WHAT IS IN URI
 //notice its bit more sneaky, have to look at inputs of 'show' function now
 Route::get('/posts/{post:slug}', [PostController::class, 'show']);//->where('post', '[A-z\-]+');
+Route::get('/register', [RegisterController::class, 'create']);
+Route::post('/register', [RegisterController::class, 'store']);
+
 
 //routes not longer needed i merged it with PostController
 // Route::get('/authors/{author:username}', function (User $author) { //Post::where('username', $author)->firstOrFail()
