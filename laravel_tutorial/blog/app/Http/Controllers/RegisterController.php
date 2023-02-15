@@ -17,15 +17,18 @@ class RegisterController extends Controller
         $attributes = request()->validate([
             'name'=>'required|max:255|min:3',
             //'username'=>'required|max:255|min:3|unique:users,username', //username has to be unique in the users table and username column
-            'usernme'=>['required', 'min:3', 'max:255', Rule::unique('users', 'username')],
+            'username'=>['required', 'min:3', 'max:255', Rule::unique('users', 'username')],
             'email'=>'required|email|max:255|unique:users,email',
             'password'=>['required', 'min:7', 'max:255'],
         ]);
+        //if validatin fails, we auto redo redirected back to previous form
 
         User::create($attributes);
 
+        
+        //session()->flash('success', 'Your account has been created.'); 
 
-        return redirect('/');
-        //If validation fails, we are redirected back to previous form.
+        //redirect to homepage with the following flashed...
+        return redirect('/')->with('success', 'Your account has been created.');;
     }
 }
