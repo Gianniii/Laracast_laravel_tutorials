@@ -9,6 +9,8 @@ class Comment extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function post(){
         //Relationships: hasOne, hasMany, belongsTo, belongsToMany
         return $this->belongsTo(Post::class);

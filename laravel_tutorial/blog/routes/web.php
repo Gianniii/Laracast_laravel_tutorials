@@ -4,6 +4,7 @@ use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\PostCommentsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +34,7 @@ Route::post('/register', [RegisterController::class, 'store'])->middleware('gues
 Route::get('/login', [SessionsController::class, 'create'])->middleware('guest');
 Route::post('/logout', [SessionsController::class, 'destroy'])->middleware('auth');
 Route::post('/sessions', [SessionsController::class, 'store'])->middleware('guest'); //could do /login ect.. here just use /sessions cuz sessions controller
-
+Route::post("/posts/{post:slug}/comments", [PostCommentsController::class, 'store']); //could also do "/comments"
 
 
 //routes not longer needed i merged it with PostController
