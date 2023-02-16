@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Comment;
 
 class Post extends Model
 {
@@ -50,5 +51,10 @@ class Post extends Model
     public function author(){
         //Relationships: hasOne, hasMany, belongsTo, belongsToMany
         return $this->belongsTo(User::class, $foreignKey = 'user_id');
+    }
+
+    public function comments(){
+        //Relationships: hasOne, hasMany, belongsTo, belongsToMany
+        return $this->hasMany(Comment::class);
     }
 }

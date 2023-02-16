@@ -22,10 +22,10 @@ class PostFactory extends Factory
         return [
             'user_id'=> User::factory(),
             'category_id' => Category::factory(),
-            'title' => $this->faker->sentence,
+            'title' => $this->faker->sentence(),
             'excerpt' => '<p>'.implode('</p><p>', $this->faker->paragraphs(2)).'</p>',
             'body'=> '<p>'.implode('</p><p>', $this->faker->paragraphs(6)).'</p>', //turn array of 2 paragraphs into string of w text of the 2
-            'slug'=>$this->faker->slug,
+            'slug'=>$this->faker->slug(),
         ];
     }
 }
