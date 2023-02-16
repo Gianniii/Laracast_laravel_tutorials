@@ -2,8 +2,10 @@
 <x-layout>
   <x-slot name="content">
     <section class="px-6 py-8">
-      <main class="max-w-6xl mx-auto mt-10 lg:mt-20 space-y-6">
-          <article class="max-w-4xl mx-auto lg:grid lg:grid-cols-12 gap-x-10">
+        <main class="max-w-6xl mx-auto mt-10 lg:mt-20 space-y-6">
+          
+            <article class="max-w-4xl mx-auto lg:grid lg:grid-cols-12 gap-x-10">
+             {{-- spans 4 cols of size 12 grid --}}
               <div class="col-span-4 lg:text-center lg:pt-14 mb-10">
                   <img src="/images/illustration-1.png" alt="" class="rounded-xl">
 
@@ -19,7 +21,8 @@
                   </div>
               </div>
 
-              <div class="col-span-8">
+              {{-- spans 8 cols of size 12 grid --}}
+              <div class="col-span-8"> 
                   <div class="hidden lg:flex justify-between mb-6">
                       <a href="/"
                           class="transition-colors duration-300 relative inline-flex items-center text-lg hover:text-blue-500">
@@ -49,34 +52,13 @@
                      {!! $post->body !!}
                   </div>
               </div>
-          </article>
-      </main>
 
-      <footer class="bg-gray-100 border border-black border-opacity-5 rounded-xl text-center py-16 px-10 mt-16">
-          <img src="/images/lary-newsletter-icon.svg" alt="" class="mx-auto -mb-6" style="width: 145px;">
-          <h5 class="text-3xl">Stay in touch with the latest posts</h5>
-          <p class="text-sm">Promise to keep the inbox clean. No bugs.</p>
+                <section class="col-span-8 col-start-5 mt-10 space-y-6">
+                    <x-post-comment/>
+                </section>
+            </article>
+        </main>
 
-          <div class="mt-10">
-              <div class="relative inline-block mx-auto lg:bg-gray-200 rounded-full">
-                  <form method="POST" action="#" class="lg:flex text-sm">
-                      <div class="lg:py-3 lg:px-5 flex items-center">
-                          <label for="email" class="hidden lg:inline-block">
-                              <img src="/images/mailbox-icon.svg" alt="mailbox letter">
-                          </label>
-
-                          <input id="email" type="text" placeholder="Your email address"
-                              class="lg:bg-transparent pl-4 focus-within:outline-none">
-                      </div>
-
-                      <button type="submit"
-                          class="transition-colors duration-300 bg-blue-500 hover:bg-blue-600 mt-4 lg:mt-0 lg:ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-8">
-                          Subscribe
-                      </button>
-                  </form>
-              </div>
-          </div>
-      </footer>
-  </section>
+    </section>
   </x-slot>
 </x-layout>
