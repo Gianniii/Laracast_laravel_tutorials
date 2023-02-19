@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\PostCommentsController;
+use App\Services\Newsletter;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,37 +20,7 @@ use App\Http\Controllers\PostCommentsController;
 */
 
 
-Route::post('/newsletter', function () {
-    request()->validate(['email' => 'required|email']);
-    
-    $mailchimp = new \MailchimpMarketing\ApiClient();
-    
-
-    $mailchimp->setConfig([
-        'apiKey' => config('services.mailchimp.key'),
-        'server' => 'us21'
-    ]);
-    
-    // $response = $mailchimp->addListMember('d3c0c95629', [
-    //     'email_address' => request('email'),
-    //     'status'=> 'subscribed'
-    // ]);
-    try {
-        $response = $mailchimp->lists->addListMember('c1a7beb679', [
-            'email_address' => request('email'),
-            'status' => 'subscribed',
-        ]);
-    } catch (\Exception $e) {
-        \Illuminate\Validation\ValidationException::withMessages([
-            'email' => 'This email could not be added to our newsletter.'
-        ]);
-    }
-   
-    //ddd($response);
-    
-    return redirect('/')->with('success', 'You are now signed up for our newsletter!');
-
-});
+Route::post('/newsletter', NewsletterController::class); //single function controller example
 
 //[PostController::class, 'index'] //path to controller + name of function want to call
 Route::get('/', [PostController::class, 'index'])->name('home');
@@ -69,7 +41,7 @@ Route::post('/logout', [SessionsController::class, 'destroy'])->middleware('auth
 Route::post('/sessions', [SessionsController::class, 'store'])->middleware('guest'); //could do /login ect.. here just use /sessions cuz sessions controller
 Route::post("/posts/{post:slug}/comments", [PostCommentsController::class, 'store']); //could also do "/comments"
 
-
+Route::get('/admin/posts/create', [PostController::class, 'create'])->middleware('admin');
 //routes not longer needed i merged it with PostController
 // Route::get('/authors/{author:username}', function (User $author) { //Post::where('username', $author)->firstOrFail()
 //     //basically find user with given username and return view with his posts

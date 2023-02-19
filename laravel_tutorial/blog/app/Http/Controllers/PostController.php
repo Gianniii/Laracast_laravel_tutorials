@@ -30,6 +30,10 @@ class PostController extends Controller {
         ]);
     }
 
+    public function create(){
+        return view('posts.create');
+    }
+
     // protected function getPosts(){
     //     return Post::latest()->filter(request(['search', 'category', 'author']))->get();//removed get to put paginate
     //     // $posts = Post::latest();
