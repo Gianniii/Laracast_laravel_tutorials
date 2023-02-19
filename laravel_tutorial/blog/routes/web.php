@@ -17,6 +17,39 @@ use App\Http\Controllers\PostCommentsController;
 |
 */
 
+
+Route::post('/newsletter', function () {
+    request()->validate(['email' => 'required|email']);
+    
+    $mailchimp = new \MailchimpMarketing\ApiClient();
+    
+
+    $mailchimp->setConfig([
+        'apiKey' => config('services.mailchimp.key'),
+        'server' => 'us21'
+    ]);
+    
+    // $response = $mailchimp->addListMember('d3c0c95629', [
+    //     'email_address' => request('email'),
+    //     'status'=> 'subscribed'
+    // ]);
+    try {
+        $response = $mailchimp->lists->addListMember('c1a7beb679', [
+            'email_address' => request('email'),
+            'status' => 'subscribed',
+        ]);
+    } catch (\Exception $e) {
+        \Illuminate\Validation\ValidationException::withMessages([
+            'email' => 'This email could not be added to our newsletter.'
+        ]);
+    }
+   
+    //ddd($response);
+    
+    return redirect('/')->with('success', 'You are now signed up for our newsletter!');
+
+});
+
 //[PostController::class, 'index'] //path to controller + name of function want to call
 Route::get('/', [PostController::class, 'index'])->name('home');
 
