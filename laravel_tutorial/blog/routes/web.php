@@ -40,6 +40,7 @@ Route::get('/login', [SessionsController::class, 'create'])->middleware('guest')
 Route::post('/logout', [SessionsController::class, 'destroy'])->middleware('auth');
 Route::post('/sessions', [SessionsController::class, 'store'])->middleware('guest'); //could do /login ect.. here just use /sessions cuz sessions controller
 Route::post("/posts/{post:slug}/comments", [PostCommentsController::class, 'store']); //could also do "/comments"
+Route::post("/admin/posts", [PostController::class, 'store'])->middleware('admin');
 
 Route::get('/admin/posts/create', [PostController::class, 'create'])->middleware('admin');
 //routes not longer needed i merged it with PostController

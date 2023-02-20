@@ -19,11 +19,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         //only need truncate if dont refresh database when seed(avoid doubles that are not allowed error)
-        User::truncate();
-        Category::truncate();
-        Post::truncate();
-
-        
+        //User::truncate();
+        //Category::truncate();
+        //Post::truncate();
         //Post::factory(5)->create(); //now that i have factory dont need any of the commented code!!
 
         $user = User::factory()->create([

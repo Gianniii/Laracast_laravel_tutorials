@@ -17,7 +17,7 @@ class MustBeAdministrator
     public function handle(Request $request, Closure $next)
     {
         //check if user exist and if its Gianni
-        if(auth()->user()?->username !== 'Gianni') {
+        if(auth()->user()?->username !== 'gianni') {
             abort(403);
         }
 
