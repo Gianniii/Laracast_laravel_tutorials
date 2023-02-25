@@ -8,8 +8,8 @@
             type= {{ $type }} 
             name ={{ $name }}
             id = {{ $name }}
-            value="{{old($name)}}" 
-            required
+            {{-- required --}}
+            {{$attributes(['value' => old($name)])}}
     >
 
     <x-form.error name="{{$name}}"/>

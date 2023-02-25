@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\PostCommentsController;
+use App\Http\Controllers\AdminPostController;
 use App\Services\Newsletter;
 
 /*
@@ -40,9 +41,23 @@ Route::get('/login', [SessionsController::class, 'create'])->middleware('guest')
 Route::post('/logout', [SessionsController::class, 'destroy'])->middleware('auth');
 Route::post('/sessions', [SessionsController::class, 'store'])->middleware('guest'); //could do /login ect.. here just use /sessions cuz sessions controller
 Route::post("/posts/{post:slug}/comments", [PostCommentsController::class, 'store']); //could also do "/comments"
-Route::post("/admin/posts", [PostController::class, 'store'])->middleware('admin');
 
-Route::get('/admin/posts/create', [PostController::class, 'create'])->middleware('admin');
+
+// Admin
+Route::middleware('can:admin')->group(function() {
+    Route::post("/admin/posts", [PostController::class, 'store']);
+    Route::get('/admin/posts/create', [PostController::class, 'create']);
+    Route::get('/admin/posts', [AdminPostController::class, 'index']);
+    Route::get('/admin/posts/{post}/destroy', [AdminPostController::class, 'destroy']);
+    Route::get('/admin/posts/{post}/edit', [AdminPostController::class, 'edit']);
+    Route::patch('admin/posts/{post}/edit', [AdminPostController::class, 'update']);
+    Route::delete('admin/posts/{post}', [AdminPostController::class, 'destroy']);
+
+});
+
+
+
+
 //routes not longer needed i merged it with PostController
 // Route::get('/authors/{author:username}', function (User $author) { //Post::where('username', $author)->firstOrFail()
 //     //basically find user with given username and return view with his posts
