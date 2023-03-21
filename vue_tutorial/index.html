@@ -1,50 +1,20 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Vue 3</title>
-    <script src="https://unpkg.com/vue"></script>
-    <style>
-      html,
-      body {
-        height: 100%;
-      }
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <title>Episode 3: Lists and Computed Properties</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
 
-      body {
-        display: grid;
-        place-content: center;
-      }
-
-      .text-red {
-        color: red;
-      }
-
-      .text-green {
-        color: green;
-      }
-    </style>
-  </head>
-  <body>
+<body class="h-full grid place-items-center bg-gray-800 text-white">
     <div id="app">
-      <button :class="active ? 'text-red' : 'text-green'" @click="toggle">
-        Click me !
-      </button>
     </div>
 
-    <script>
-      Vue.createApp({
-        data() {
-          return {
-            active: false,
-          };
-        },
-
-        methods: {
-          toggle() {
-            this.active = !this.active;
-          },
-        },
-      }).mount("#app");
+    <script type="module">
+        import App from "./js/components/App.js"
+        
+        Vue.createApp(App).mount('#app');
     </script>
-  </body>
+</body>
 </html>

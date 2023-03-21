@@ -1,0 +1,12 @@
+How to launch and use the laravel tutorial: 
+php artisan serve
+
+
+npx serve
+
+launch server:
+npx json-server db.json -p 3001
+=> script to launch: npm run start
+
+for vite
+npm run dev
